@@ -15,6 +15,7 @@ import Data from '../Data/Data';
 import Card from '../Components/Card';
 import FloatingButton from '../Components/FloatingButton';
 import {SliderBox} from 'react-native-image-slider-box';
+import ModalDropdown from 'react-native-modal-dropdown';
 const Itemlist = props => {
   const [dataFilter, setDataFilter] = useState(Data.Offers);
   return (
@@ -44,14 +45,17 @@ const Itemlist = props => {
             }}>
             Branch
           </Text>
-          <Text
+          <ModalDropdown
+            options={['Banni,Rawalpindi', 'Banni,Lahore', 'Banni,Rawalpindi']}
+            style={{marginLeft: 10, color: '#000'}}></ModalDropdown>
+          {/* <Text
             style={{
               marginLeft: 10,
               color: '#000',
               fontWeight: '700',
             }}>
             Banni,Rawalpindi
-          </Text>
+          </Text> */}
         </View>
 
         <View
@@ -81,11 +85,6 @@ const Itemlist = props => {
             require('../Assets/bg.jpg'),
           ]}
         />
-        {/* <ImageBackground
-          source={}
-          style={{height: 200, width: wp('100%')}}>
-          <Text></Text>
-        </ImageBackground> */}
       </View>
       <View
         style={{

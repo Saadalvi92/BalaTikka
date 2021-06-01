@@ -30,10 +30,8 @@ function Card({title, image, price, qty}) {
           style={{
             flex: 1,
             width: wp('45%'),
-
             borderRadius: 10,
-
-            // shadowColor: 'red',
+            shadowColor: 'red',
           }}
           source={image}
         />
@@ -50,23 +48,24 @@ function Card({title, image, price, qty}) {
             height: 30,
             flexDirection: 'row',
             alignItems: 'flex-end',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
           }}>
           <Text
             style={{
+              marginLeft: '8%',
               fontSize: 15,
               fontWeight: '700',
             }}>
             {title}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity style={{marginRight: '8%', marginTop: '3%'}}>
             <AntDesign name="staro" size={25} color="#121212" />
           </TouchableOpacity>
         </View>
 
         <View
           style={{
-            marginLeft: 18,
+            marginLeft: '8%',
           }}>
           <Text>{qty} pieces</Text>
         </View>
