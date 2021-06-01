@@ -17,25 +17,23 @@ function Card({title, image, price, qty}) {
         flexDirection: 'row',
         borderRadius: 10,
         alignSelf: 'center',
-        width: wp('96%'),
         marginBottom: 10,
       }}>
       <View
         style={{
           width: wp('40%'),
-          borderRadius: 10,
           height: '100%',
+          flex: 1,
           overflow: 'hidden',
         }}>
         <Image
           style={{
-            width: wp('40%'),
-            height: '92%',
+            flex: 1,
+            width: wp('45%'),
+
             borderRadius: 10,
-            marginTop: 7,
-            marginLeft: 5,
-            marginBottom: 5,
-            shadowColor: 'red',
+
+            // shadowColor: 'red',
           }}
           source={image}
         />

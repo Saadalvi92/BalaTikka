@@ -143,7 +143,7 @@ const branch = () => {
                 color: '#999999',
                 alignSelf: 'center',
               }}>
-              Skip Login >>{' '}
+              Skip Login {'>> '}
             </Text>
           </TouchableOpacity>
         </View>
