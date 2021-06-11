@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286508244677",
+    "project_id": "balla-tikka",
+    "storage_bucket": "balla-tikka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286508244677:android:e30bd6b6746f3280c15aac",
+        "android_client_info": {
+          "package_name": "com.balatikka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286508244677-25uoo0kfl19oohlah1n74g0u5f3n2r5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBKcwAc2K9o9ST2FsfmqApDZKNwoI1--U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286508244677-25uoo0kfl19oohlah1n74g0u5f3n2r5m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

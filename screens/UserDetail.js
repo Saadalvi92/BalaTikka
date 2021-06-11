@@ -18,14 +18,23 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import {ListAccordionGroupContext} from 'react-native-paper/lib/typescript/components/List/ListAccordionGroup';
+import auth from '@react-native-firebase/auth';
 const UserDetails = props => {
+  const Logout = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        props.navigation.popToTop();
+      });
+  };
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#f9f9f9',
       }}>
+      {console.log(props.route.params)}
       <View
         style={{
           flex: 2.5,
@@ -60,7 +69,7 @@ const UserDetails = props => {
                   fontSize: 17,
                   fontWeight: '600',
                 }}>
-                Usman
+                {!props.route.params ? 'Usman' : props.route.params.userID}
               </Text>
               <MaterialCommunityIcons name="rename-box" size={30} color="red" />
             </View>
@@ -234,37 +243,42 @@ const UserDetails = props => {
           </View>
         </View>
 
-        <View
-          style={{
-            width: wp('92%'),
-            alignSelf: 'center',
-            height: 40,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+        <TouchableOpacity
+          onPress={() => {
+            Logout();
           }}>
           <View
             style={{
+              width: wp('92%'),
+              alignSelf: 'center',
+              height: 40,
               flexDirection: 'row',
-              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-            <Entypo name="log-out" size={20} color="black" />
-            <Text
+            <View
               style={{
-                color: '#5a5a5a',
-                fontSize: 20,
-                marginLeft: 7,
-                fontWeight: '300',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              Logout
-            </Text>
+              <Entypo name="log-out" size={20} color="black" />
+              <Text
+                style={{
+                  color: '#5a5a5a',
+                  fontSize: 20,
+                  marginLeft: 7,
+                  fontWeight: '300',
+                }}>
+                Logout
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <Ionicons name="caret-forward" size={23} color="#717171" />
+            </View>
           </View>
-          <View
-            style={{
-              alignItems: 'center',
-            }}>
-            <Ionicons name="caret-forward" size={23} color="#717171" />
-          </View>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View

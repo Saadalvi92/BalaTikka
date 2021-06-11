@@ -13,8 +13,38 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import auth from '@react-native-firebase/auth';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 const Login = props => {
+  async function onFacebookButtonPress() {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    return (
+      auth().signInWithCredential(facebookCredential),
+      props.navigation.navigate('Itemlist', data)
+    );
+  }
   return (
     <View
       style={{
@@ -58,6 +88,9 @@ const Login = props => {
               alignItems: 'center',
               width: wp('65'),
               justifyContent: 'space-around',
+            }}
+            onPress={() => {
+              onFacebookButtonPress();
             }}>
             <EvilIcons name="sc-facebook" size={30} color="black" />
 
@@ -105,7 +138,7 @@ const Login = props => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('Itemlist')}
+          onPress={() => props.navigation.navigate('LoginForm')}
           style={{
             width: wp('80%'),
             height: 45,
@@ -141,7 +174,7 @@ const Login = props => {
                 color: '#999999',
                 alignSelf: 'center',
               }}>
-              Skip Login >>{' '}
+              Skip Login {'>>'}
             </Text>
           </TouchableOpacity>
         </View>

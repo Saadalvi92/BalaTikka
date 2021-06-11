@@ -1,14 +1,18 @@
 import React from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Text, View, Image, TouchableOpacity, ToastAndroid} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-function Card({title, image, price, qty}) {
+import {addToCart} from '../Store/Shopping/Shopping-actions';
+function Card({title, image, price, qty, item, addToCart}) {
+  const Addtocart = () => {
+    ToastAndroid.show('Item added to Cart', ToastAndroid.SHORT);
+    addToCart(item.id);
+  };
   return (
     <View
       style={{
@@ -101,6 +105,9 @@ function Card({title, image, price, qty}) {
                   marginLeft: 40,
                   borderRadius: 10,
                   backgroundColor: '#f90000',
+                }}
+                onPress={() => {
+                  Addtocart();
                 }}>
                 <Text
                   style={{
@@ -119,5 +126,8 @@ function Card({title, image, price, qty}) {
     </View>
   );
 }
+const mapDispatchToProps = dispatch => {
+  return {addToCart: id => dispatch(addToCart(id))};
+};
 
-export default Card;
+export default connect(null, mapDispatchToProps)(Card);

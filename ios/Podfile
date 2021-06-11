@@ -12,6 +12,14 @@ target 'BalaTikka' do
     :hermes_enabled => false
   )
 
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-google-signin/google-signin'
+
+  pod 'RNFBAuth', :path => '../node_modules/@react-native-firebase/auth'
+
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
   target 'BalaTikkaTests' do
     inherit! :complete
     # Pods for testing

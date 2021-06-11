@@ -16,8 +16,24 @@ import Card from '../Components/Card';
 import FloatingButton from '../Components/FloatingButton';
 import {SliderBox} from 'react-native-image-slider-box';
 import ModalDropdown from 'react-native-modal-dropdown';
+import {Button} from 'react-native';
 const Itemlist = props => {
-  const [dataFilter, setDataFilter] = useState(Data.Offers);
+  const Naan = Data.filter(item => {
+    return item.Category === 'NAAN';
+  });
+  const BarBq = Data.filter(item => {
+    return item.Category === 'BARB.Q';
+  });
+  const ChickenPulao = Data.filter(item => {
+    return item.Category === 'CHICKENPULAO';
+  });
+  const Offers = Data.filter(item => {
+    return item.Category === 'OFFERS';
+  });
+  const Sweets = Data.filter(item => {
+    return item.Category === 'SWEETS';
+  });
+  const [dataFilter, setDataFilter] = useState(Offers);
   return (
     <View
       style={{
@@ -48,14 +64,6 @@ const Itemlist = props => {
           <ModalDropdown
             options={['Banni,Rawalpindi', 'Banni,Lahore', 'Banni,Rawalpindi']}
             style={{marginLeft: 10, color: '#000'}}></ModalDropdown>
-          {/* <Text
-            style={{
-              marginLeft: 10,
-              color: '#000',
-              fontWeight: '700',
-            }}>
-            Banni,Rawalpindi
-          </Text> */}
         </View>
 
         <View
@@ -70,7 +78,9 @@ const Itemlist = props => {
             <AntDesign name="staro" size={30} color="#121212" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('UserDetail')}>
+            onPress={() =>
+              props.navigation.navigate('UserDetail', props.route.params)
+            }>
             <FontAwesome name="user-circle-o" size={30} color="#000" />
           </TouchableOpacity>
         </View>
@@ -99,19 +109,21 @@ const Itemlist = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              setDataFilter(Data.Offers);
+              // setDataFilter(Data.Offers);\
+              setDataFilter(Offers);
+              // console.log(Offers);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Offers</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setDataFilter(Data.BarBq);
+              setDataFilter(BarBq);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Bar B.Q</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setDataFilter(Data.ChickenPulao);
+              setDataFilter(ChickenPulao);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>
               Chicken Pulao
@@ -119,13 +131,13 @@ const Itemlist = props => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setDataFilter(Data.Sweet);
+              setDataFilter(Sweets);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Sweet</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setDataFilter(Data.Naan);
+              setDataFilter(Naan);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Naan</Text>
           </TouchableOpacity>
@@ -146,8 +158,15 @@ const Itemlist = props => {
               image={item.image}
               price={item.price}
               qty={item.qty}
+              item={item}
             />
           )}
+        />
+        <Button
+          title="Cart"
+          onPress={() => {
+            props.navigation.navigate('Cart');
+          }}
         />
       </View>
       <FloatingButton style={{bottom: 100}} />

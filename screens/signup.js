@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import colors from '../Components/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,8 +18,37 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import auth from '@react-native-firebase/auth';
+const Signup = props => {
+  const [Name, setName] = useState();
+  const [mobile, setMobile] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [RePassword, setRePassword] = useState();
+  const Userdata = {Name, mobile, email};
+  const Signupi = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        alert('SignUp Successful');
+        props.navigation.navigate('Itemlist', Userdata);
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+          alert('That email address is already in use!');
+        }
 
-const Signup = () => {
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+          alert('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  };
   return (
     <View
       style={{
@@ -57,9 +87,12 @@ const Signup = () => {
           }}>
           <TextInput
             placeholder={'Your Name'}
-            placeholderTextColor={'#cecece'}
+            placeholderTextColor={colors.mediumGrey}
             style={{
               fontSize: 20,
+            }}
+            onChangeText={text => {
+              setName(text);
             }}
           />
         </View>
@@ -76,9 +109,14 @@ const Signup = () => {
           }}>
           <TextInput
             placeholder={'Mobile#'}
-            placeholderTextColor={'#cecece'}
+            placeholderTextColor={colors.mediumGrey}
+            keyboardType="numeric"
+            keyboardAppearance="dark"
             style={{
               fontSize: 15,
+            }}
+            onChangeText={text => {
+              setMobile(text);
             }}
           />
         </View>
@@ -95,9 +133,12 @@ const Signup = () => {
           }}>
           <TextInput
             placeholder={'Email'}
-            placeholderTextColor={'#cecece'}
+            placeholderTextColor={colors.mediumGrey}
             style={{
               fontSize: 15,
+            }}
+            onChangeText={text => {
+              setEmail(text);
             }}
           />
         </View>
@@ -114,9 +155,12 @@ const Signup = () => {
           }}>
           <TextInput
             placeholder={'Password'}
-            placeholderTextColor={'#cecece'}
+            placeholderTextColor={colors.mediumGrey}
             style={{
               fontSize: 20,
+            }}
+            onChangeText={text => {
+              setPassword(text);
             }}
           />
         </View>
@@ -133,41 +177,117 @@ const Signup = () => {
           }}>
           <TextInput
             placeholder={'Remember Password'}
-            placeholderTextColor={'#cecece'}
+            placeholderTextColor={colors.mediumGrey}
             style={{
               fontSize: 20,
+            }}
+            onChangeText={text => {
+              setRePassword(text);
             }}
           />
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            height: 70,
-            alignItems: 'flex-end',
-          }}>
-          <TouchableOpacity
+        {password ? (
+          password === RePassword ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                height: 70,
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#0011ff',
+                  height: 40,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: wp('40%'),
+                  borderWidth: 0.5,
+                  borderRadius: 6,
+                  borderColor: 'black',
+                }}
+                onPress={() => {
+                  Signupi();
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 20,
+                  }}>
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                height: 70,
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                disabled
+                style={{
+                  backgroundColor: colors.mediumGrey,
+                  height: 40,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: wp('40%'),
+                  borderWidth: 0.5,
+                  borderRadius: 6,
+                  borderColor: 'black',
+                }}
+                onPress={() => {
+                  Signupi();
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 20,
+                  }}>
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )
+        ) : (
+          <View
             style={{
-              backgroundColor: '#0011ff',
-              height: 40,
               flexDirection: 'row',
               justifyContent: 'center',
-              alignItems: 'center',
-              width: wp('40%'),
-              borderWidth: 0.5,
-              borderRadius: 6,
-              borderColor: 'black',
+              height: 70,
+              alignItems: 'flex-end',
             }}>
-            <Text
+            <TouchableOpacity
+              disabled
               style={{
-                color: 'white',
-                fontSize: 20,
+                backgroundColor: colors.mediumGrey,
+                height: 40,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: wp('40%'),
+                borderWidth: 0.5,
+                borderRadius: 6,
+                borderColor: 'black',
+              }}
+              onPress={() => {
+                Signupi();
               }}>
-              Sign Up
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 20,
+                }}>
+                Sign Up
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       <View
@@ -194,7 +314,7 @@ const Signup = () => {
               color: '#999999',
               alignSelf: 'center',
             }}>
-            Skip Login >>{' '}
+            Skip Login {'>>'}
           </Text>
         </TouchableOpacity>
       </View>
