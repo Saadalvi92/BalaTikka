@@ -13,12 +13,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import auth from '@react-native-firebase/auth';
 const Signup = props => {
   const [Name, setName] = useState();
@@ -55,171 +51,208 @@ const Signup = props => {
         flex: 1,
         backgroundColor: '#dddddd',
       }}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
-        <FontAwesome name="user-circle-o" size={150} color="black" />
-        <TouchableOpacity
-          style={{
-            marginLeft: -20,
-            marginTop: 45,
-          }}>
-          <AntDesign name="pluscircleo" size={30} color="#4fb853" />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          flex: 2,
-        }}>
+      <ScrollView>
         <View
           style={{
-            alignSelf: 'center',
-            marginTop: 10,
-            borderBottomColor: 'black',
-            borderBottomWidth: 0.5,
-            width: wp('80%'),
-            flexDirection: 'row',
+            flex: 1,
             justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
           }}>
-          <TextInput
-            placeholder={'Your Name'}
-            placeholderTextColor={colors.mediumGrey}
+          <FontAwesome name="user-circle-o" size={150} color="black" />
+          <TouchableOpacity
             style={{
-              fontSize: 20,
-            }}
-            onChangeText={text => {
-              setName(text);
-            }}
-          />
+              marginLeft: -20,
+              marginTop: 45,
+            }}>
+            <AntDesign name="pluscircleo" size={30} color="#4fb853" />
+          </TouchableOpacity>
         </View>
-
         <View
           style={{
-            alignSelf: 'center',
-            //marginTop:10,
-            borderBottomColor: 'black',
-            borderBottomWidth: 0.5,
-            width: wp('80%'),
-            flexDirection: 'row',
-            justifyContent: 'center',
+            flex: 2,
           }}>
-          <TextInput
-            placeholder={'Mobile#'}
-            placeholderTextColor={colors.mediumGrey}
-            keyboardType="numeric"
-            keyboardAppearance="dark"
+          <View
             style={{
-              fontSize: 15,
-            }}
-            onChangeText={text => {
-              setMobile(text);
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            alignSelf: 'center',
-            //marginTop:10,
-            borderBottomColor: 'black',
-            borderBottomWidth: 0.5,
-            width: wp('80%'),
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <TextInput
-            placeholder={'Email'}
-            placeholderTextColor={colors.mediumGrey}
-            style={{
-              fontSize: 15,
-            }}
-            onChangeText={text => {
-              setEmail(text);
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            alignSelf: 'center',
-            marginTop: 10,
-            borderBottomColor: 'black',
-            borderBottomWidth: 0.5,
-            width: wp('80%'),
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <TextInput
-            placeholder={'Password'}
-            placeholderTextColor={colors.mediumGrey}
-            style={{
-              fontSize: 20,
-            }}
-            onChangeText={text => {
-              setPassword(text);
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            alignSelf: 'center',
-            marginTop: 10,
-            borderBottomColor: 'black',
-            borderBottomWidth: 0.5,
-            width: wp('80%'),
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <TextInput
-            placeholder={'Remember Password'}
-            placeholderTextColor={colors.mediumGrey}
-            style={{
-              fontSize: 20,
-            }}
-            onChangeText={text => {
-              setRePassword(text);
-            }}
-          />
-        </View>
-
-        {password ? (
-          password === RePassword ? (
-            <View
+              alignSelf: 'center',
+              marginTop: 10,
+              borderBottomColor: 'black',
+              borderBottomWidth: 0.5,
+              width: wp('80%'),
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TextInput
+              placeholder={'Your Name'}
+              placeholderTextColor={colors.mediumGrey}
               style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                height: 70,
-                alignItems: 'flex-end',
-              }}>
-              <TouchableOpacity
+                fontSize: 20,
+              }}
+              onChangeText={text => {
+                setName(text);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              alignSelf: 'center',
+              //marginTop:10,
+              borderBottomColor: 'black',
+              borderBottomWidth: 0.5,
+              width: wp('80%'),
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TextInput
+              placeholder={'Mobile#'}
+              placeholderTextColor={colors.mediumGrey}
+              keyboardType="numeric"
+              keyboardAppearance="dark"
+              style={{
+                fontSize: 15,
+              }}
+              onChangeText={text => {
+                setMobile(text);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              alignSelf: 'center',
+              //marginTop:10,
+              borderBottomColor: 'black',
+              borderBottomWidth: 0.5,
+              width: wp('80%'),
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TextInput
+              placeholder={'Email'}
+              placeholderTextColor={colors.mediumGrey}
+              style={{
+                fontSize: 15,
+              }}
+              onChangeText={text => {
+                setEmail(text);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              alignSelf: 'center',
+              marginTop: 10,
+              borderBottomColor: 'black',
+              borderBottomWidth: 0.5,
+              width: wp('80%'),
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TextInput
+              placeholder={'Password'}
+              placeholderTextColor={colors.mediumGrey}
+              style={{
+                fontSize: 20,
+              }}
+              secureTextEntry
+              onChangeText={text => {
+                setPassword(text);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              alignSelf: 'center',
+              marginTop: 10,
+              borderBottomColor: 'black',
+              borderBottomWidth: 0.5,
+              width: wp('80%'),
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TextInput
+              placeholder={'Re-enter Password'}
+              placeholderTextColor={colors.mediumGrey}
+              style={{
+                fontSize: 20,
+              }}
+              secureTextEntry
+              onChangeText={text => {
+                setRePassword(text);
+              }}
+            />
+          </View>
+
+          {password ? (
+            password === RePassword ? (
+              <View
                 style={{
-                  backgroundColor: '#0011ff',
-                  height: 40,
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  alignItems: 'center',
-                  width: wp('40%'),
-                  borderWidth: 0.5,
-                  borderRadius: 6,
-                  borderColor: 'black',
-                }}
-                onPress={() => {
-                  Signupi();
+                  height: 70,
+                  alignItems: 'flex-end',
                 }}>
-                <Text
+                <TouchableOpacity
                   style={{
-                    color: 'white',
-                    fontSize: 20,
+                    backgroundColor: '#0011ff',
+                    height: 40,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: wp('40%'),
+                    borderWidth: 0.5,
+                    borderRadius: 6,
+                    borderColor: 'black',
+                  }}
+                  onPress={() => {
+                    Signupi();
                   }}>
-                  Sign Up
-                </Text>
-              </TouchableOpacity>
-            </View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 20,
+                    }}>
+                    Sign Up
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  height: 70,
+                  alignItems: 'flex-end',
+                }}>
+                <TouchableOpacity
+                  disabled
+                  style={{
+                    backgroundColor: colors.mediumGrey,
+                    height: 40,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: wp('40%'),
+                    borderWidth: 0.5,
+                    borderRadius: 6,
+                    borderColor: 'black',
+                  }}
+                  onPress={() => {
+                    Signupi();
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 20,
+                    }}>
+                    Sign Up
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )
           ) : (
             <View
               style={{
@@ -253,71 +286,38 @@ const Signup = props => {
                 </Text>
               </TouchableOpacity>
             </View>
-          )
-        ) : (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              height: 70,
-              alignItems: 'flex-end',
-            }}>
-            <TouchableOpacity
-              disabled
-              style={{
-                backgroundColor: colors.mediumGrey,
-                height: 40,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: wp('40%'),
-                borderWidth: 0.5,
-                borderRadius: 6,
-                borderColor: 'black',
-              }}
-              onPress={() => {
-                Signupi();
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 20,
-                }}>
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+          )}
+        </View>
 
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <Image
+        <View
           style={{
-            width: 200,
-            marginTop: -13,
-            height: 150,
-            alignSelf: 'center',
-          }}
-          source={require('../Assets/logo.png')}
-        />
-
-        <TouchableOpacity
-          style={{
-            marginTop: 10,
+            flex: 1,
           }}>
-          <Text
+          <Image
             style={{
-              fontSize: 17,
-              color: '#999999',
+              width: 200,
+              marginTop: '5%',
+              height: 150,
               alignSelf: 'center',
+            }}
+            source={require('../Assets/logo.png')}
+          />
+
+          <TouchableOpacity
+            style={{
+              marginTop: 10,
             }}>
-            Skip Login {'>>'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={{
+                fontSize: 17,
+                color: '#999999',
+                alignSelf: 'center',
+              }}>
+              Skip Login {'>>'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

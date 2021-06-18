@@ -14,3 +14,6 @@ export const loadCurrentItem = item => {
     payload: item,
   };
 };
+export const Load_Products = item => {
+  return {type: actionTypes.Load_Products, payload: item};
+};

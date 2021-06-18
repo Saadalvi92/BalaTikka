@@ -1,35 +1,25 @@
-import React, {useState} from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, TextInput, View, Image, TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {baseProps} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import firebaseData from '../Data/Data';
 
 const LoginForm = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const [firedata, setFireData] = useState([]);
+  firebaseData().then(e => setFireData(e));
   const Login = (Email, Password) => {
     auth()
       .signInWithEmailAndPassword(Email, Password)
-      .then(() => {
+      .then(data => {
         console.log('User account created & signed in!');
-        props.navigation.navigate('Itemlist');
+        firedata
+          ? props.navigation.navigate('Itemlist', [data.user, firedata])
+          : console.log('data is missing');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -93,6 +83,7 @@ const LoginForm = props => {
             style={{
               fontSize: 20,
             }}
+            secureTextEntry
             onChangeText={text => {
               setPassword(text);
             }}

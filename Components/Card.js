@@ -1,9 +1,6 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity, ToastAndroid} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,6 +19,7 @@ function Card({title, image, price, qty, item, addToCart}) {
         borderRadius: 10,
         alignSelf: 'center',
         marginBottom: 10,
+        flex: 1,
       }}>
       <View
         style={{
@@ -37,7 +35,9 @@ function Card({title, image, price, qty, item, addToCart}) {
             borderRadius: 10,
             shadowColor: 'red',
           }}
-          source={image}
+          source={{
+            uri: image,
+          }}
         />
       </View>
       <View
@@ -91,7 +91,7 @@ function Card({title, image, price, qty, item, addToCart}) {
                 fontSize: 15,
                 fontWeight: '700',
               }}>
-              RS{price}
+              RS:{price}
             </Text>
 
             <View>

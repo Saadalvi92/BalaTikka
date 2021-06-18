@@ -1,38 +1,50 @@
-import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
-  FlatList,
-} from 'react-native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import React, {useEffect, useState} from 'react';
+import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Data from '../Data/Data';
 import Card from '../Components/Card';
 import FloatingButton from '../Components/FloatingButton';
 import {SliderBox} from 'react-native-image-slider-box';
 import ModalDropdown from 'react-native-modal-dropdown';
-import {Button} from 'react-native';
-const Itemlist = props => {
-  const Naan = Data.filter(item => {
-    return item.Category === 'NAAN';
-  });
-  const BarBq = Data.filter(item => {
-    return item.Category === 'BARB.Q';
-  });
-  const ChickenPulao = Data.filter(item => {
-    return item.Category === 'CHICKENPULAO';
-  });
-  const Offers = Data.filter(item => {
-    return item.Category === 'OFFERS';
-  });
-  const Sweets = Data.filter(item => {
-    return item.Category === 'SWEETS';
-  });
+import {Load_Products} from '../Store/Shopping/Shopping-actions';
+import {connect} from 'react-redux';
+
+const Itemlist = ({route, addproducts, navigation}) => {
+  const Data = route.params;
+  const firedata = Data[1];
+  const UserData = Data[0];
+  useEffect(() => {
+    addproducts(firedata);
+  }, []);
+  const SelectArray = ['Banni,Rawalpindi', 'Banni,Lahore', 'Banni,Rawalpindi'];
+  const [branch, SetBranch] = useState();
+  const Naan = firedata
+    ? firedata.filter(item => {
+        return item.Category === 'NAAN';
+      })
+    : null;
+  const BarBq = firedata
+    ? firedata.filter(item => {
+        return item.Category === 'BARB.Q';
+      })
+    : null;
+  const ChickenPulao = firedata
+    ? firedata.filter(item => {
+        return item.Category === 'CHICKENPULAO';
+      })
+    : null;
+  const Offers = firedata
+    ? firedata.filter(item => {
+        return item.Category === 'OFFERS';
+      })
+    : null;
+
+  const Sweets = firedata
+    ? firedata.filter(item => {
+        return item.Category === 'SWEETS';
+      })
+    : null;
+
   const [dataFilter, setDataFilter] = useState(Offers);
   return (
     <View
@@ -40,6 +52,8 @@ const Itemlist = props => {
         flex: 1,
         backgroundColor: '#e4e4e4',
       }}>
+      {console.log(UserData)}
+
       <View
         style={{
           flex: 0.5,
@@ -49,6 +63,7 @@ const Itemlist = props => {
           paddingRight: 5,
           paddingLeft: 5,
         }}>
+        {console.log(UserData)}
         <View
           style={{
             flexDirection: 'row',
@@ -62,25 +77,36 @@ const Itemlist = props => {
             Branch
           </Text>
           <ModalDropdown
-            options={['Banni,Rawalpindi', 'Banni,Lahore', 'Banni,Rawalpindi']}
-            style={{marginLeft: 10, color: '#000'}}></ModalDropdown>
+            options={SelectArray}
+            style={{
+              marginLeft: 10,
+              color: '#000',
+              width: '50%',
+            }}
+            dropdownStyle={{width: '50%'}}
+            onSelect={Value => {
+              SetBranch(SelectArray[Value]);
+            }}></ModalDropdown>
         </View>
 
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            flex: 1,
           }}>
           <TouchableOpacity>
             <AntDesign name="search1" size={30} color="#000" />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <AntDesign name="staro" size={30} color="#121212" />
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Cart', UserData);
+            }}>
+            <FontAwesome name="shopping-cart" size={30} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate('UserDetail', props.route.params)
-            }>
+            onPress={() => navigation.navigate('UserDetail', UserData)}>
             <FontAwesome name="user-circle-o" size={30} color="#000" />
           </TouchableOpacity>
         </View>
@@ -91,8 +117,12 @@ const Itemlist = props => {
         }}>
         <SliderBox
           images={[
-            require('../Assets/Banner.png'),
-            require('../Assets/bg.jpg'),
+            {
+              uri: 'https://firebasestorage.googleapis.com/v0/b/balla-tikka.appspot.com/o/Assets%2FBanner.png?alt=media&token=2881a560-4959-486f-89eb-660e19593bd0',
+            },
+            {
+              uri: 'https://firebasestorage.googleapis.com/v0/b/balla-tikka.appspot.com/o/Assets%2Fbg.jpg?alt=media&token=2593497b-9b66-47d7-bebd-10190e85498a',
+            },
           ]}
         />
       </View>
@@ -109,9 +139,7 @@ const Itemlist = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              // setDataFilter(Data.Offers);\
               setDataFilter(Offers);
-              // console.log(Offers);
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>Offers</Text>
           </TouchableOpacity>
@@ -143,6 +171,7 @@ const Itemlist = props => {
           </TouchableOpacity>
         </View>
       </View>
+
       <View
         style={{
           flex: 4,
@@ -154,6 +183,7 @@ const Itemlist = props => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <Card
+              key={item.id}
               title={item.name}
               image={item.image}
               price={item.price}
@@ -162,16 +192,12 @@ const Itemlist = props => {
             />
           )}
         />
-        <Button
-          title="Cart"
-          onPress={() => {
-            props.navigation.navigate('Cart');
-          }}
-        />
       </View>
       <FloatingButton style={{bottom: 100}} />
     </View>
   );
 };
-
-export default Itemlist;
+const mapDispatchToProps = dispatch => {
+  return {addproducts: item => dispatch(Load_Products(item))};
+};
+export default connect(null, mapDispatchToProps)(Itemlist);

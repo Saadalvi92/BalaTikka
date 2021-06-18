@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,8 +7,10 @@ import {
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import auth from '@react-native-firebase/auth';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
-
+import firebaseData from '../Data/Data';
 const Login = props => {
+  const [firedata, setFireData] = useState([]);
+  firebaseData().then(e => setFireData(e));
   async function onFacebookButtonPress() {
     const result = await LoginManager.logInWithPermissions([
       'public_profile',
@@ -42,7 +36,7 @@ const Login = props => {
     // Sign-in the user with the credential
     return (
       auth().signInWithCredential(facebookCredential),
-      props.navigation.navigate('Itemlist', data)
+      props.navigation.navigate('Itemlist', [data, firedata])
     );
   }
   return (

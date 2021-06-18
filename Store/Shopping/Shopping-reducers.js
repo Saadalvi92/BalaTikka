@@ -1,8 +1,7 @@
 import * as actionTypes from './Shopping-types';
-import Data from '../../Data/Data';
 const INITIAL_STATE = {
-  products: Data, //{id,title,desc,price,img}
-  cart: [], //{id,title,desc,price,img,qty}
+  products: [],
+  cart: [],
   currentItem: null,
 };
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -38,6 +37,9 @@ const shopReducer = (state = INITIAL_STATE, action) => {
       };
     case actionTypes.LOAD_CURRENT_ITEM:
       return {...state, currentItem: action.payload};
+    case actionTypes.Load_Products:
+      state.products = action.payload;
+      return state;
     default:
       return state;
   }

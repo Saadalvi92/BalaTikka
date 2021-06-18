@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Animated,
   TouchableWithoutFeedback,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -67,9 +68,12 @@ export default class FloatingButton extends React.Component {
 
     return (
       <View style={[styles.container, this.props.style]}>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Linking.openURL('tel:+123456789');
+          }}>
           <Animated.View style={[styles.button, styles.secondary, WebStyle]}>
-            <Icon name="language" size={20} color="#F02A4B" />
+            <Icon name="call" size={20} color="#F02A4B" />
           </Animated.View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback>
@@ -84,7 +88,7 @@ export default class FloatingButton extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={this.toggleMenu}>
           <Animated.View style={[styles.button, styles.menu, rotation]}>
-            <Icon name="add-ic-call" size={24} color="#000" />
+            <Icon name="contact-support" size={24} color="#000" />
           </Animated.View>
         </TouchableWithoutFeedback>
       </View>
