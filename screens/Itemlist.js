@@ -52,8 +52,6 @@ const Itemlist = ({route, addproducts, navigation}) => {
         flex: 1,
         backgroundColor: '#e4e4e4',
       }}>
-      {console.log(UserData)}
-
       <View
         style={{
           flex: 0.5,
@@ -63,7 +61,6 @@ const Itemlist = ({route, addproducts, navigation}) => {
           paddingRight: 5,
           paddingLeft: 5,
         }}>
-        {console.log(UserData)}
         <View
           style={{
             flexDirection: 'row',

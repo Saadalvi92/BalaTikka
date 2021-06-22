@@ -1,13 +1,5 @@
-import React, {useState} from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import {Text, View, TouchableOpacity, Linking} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,7 +10,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {ListAccordionGroupContext} from 'react-native-paper/lib/typescript/components/List/ListAccordionGroup';
 import auth from '@react-native-firebase/auth';
 const UserDetails = props => {
   const Logout = () => {
@@ -34,7 +25,6 @@ const UserDetails = props => {
         flex: 1,
         backgroundColor: '#f9f9f9',
       }}>
-      {console.log(props.route.params)}
       <View
         style={{
           flex: 2.5,
@@ -64,12 +54,17 @@ const UserDetails = props => {
                 alignItems: 'center',
                 marginLeft: 15,
               }}>
+              {console.log(props.route.params)}
               <Text
                 style={{
                   fontSize: 17,
                   fontWeight: '600',
                 }}>
-                {!props.route.params ? 'Usman' : props.route.params.userID}
+                {!props.route.params
+                  ? 'NoName'
+                  : props.route.params.displayName
+                  ? props.route.params.displayName
+                  : props.route.params.email}
               </Text>
               <MaterialCommunityIcons name="rename-box" size={30} color="red" />
             </View>
@@ -81,7 +76,9 @@ const UserDetails = props => {
                   marginLeft: 10,
                   fontWeight: 'bold',
                 }}>
-                +9200000000000
+                {props.route.params.phoneNumber
+                  ? props.route.params.phoneNumber
+                  : '+923'}
               </Text>
             </View>
           </View>
@@ -350,6 +347,9 @@ const UserDetails = props => {
                 height: 40,
                 borderRadius: 10,
                 backgroundColor: '#f90000',
+              }}
+              onPress={() => {
+                Linking.openURL('tel:+123456789');
               }}>
               <Ionicons name="ios-call" size={20} color="#fffdff" />
               <Text

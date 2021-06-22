@@ -42,7 +42,11 @@ function Cart({cart, route}) {
     firestore()
       .collection('Orders')
       .add({
-        Customer_Details: UserData.email ? UserData.email : UserData,
+        Customer_Details: {
+          Name: UserData.displayName,
+          email: UserData.email,
+          Phonenumeber: UserData.phoneNumber ? UserData.phoneNumber : 'null',
+        },
         OrderDetails: cart,
         Location_parameters: {Longitude: longitude, Latitude: latitude},
         Order_Time: firestore.FieldValue.serverTimestamp(),

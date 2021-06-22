@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "286508244677",
-    "project_id": "balla-tikka",
-    "storage_bucket": "balla-tikka.appspot.com"
+    "project_number": "916012287346",
+    "project_id": "ballatikka-55a10",
+    "storage_bucket": "ballatikka-55a10.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:286508244677:android:e30bd6b6746f3280c15aac",
+        "mobilesdk_app_id": "1:916012287346:android:9dbe05ad0ba447584209eb",
         "android_client_info": {
           "package_name": "com.balatikka"
         }
       },
       "oauth_client": [
         {
-          "client_id": "286508244677-25uoo0kfl19oohlah1n74g0u5f3n2r5m.apps.googleusercontent.com",
+          "client_id": "916012287346-26k4582m0fpc4kis7fm2ohtep6kr3eee.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBBKcwAc2K9o9ST2FsfmqApDZKNwoI1--U"
+          "current_key": "AIzaSyCVvUk2qJfvRhVo8w6eNReJJNobYzg-AGs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "286508244677-25uoo0kfl19oohlah1n74g0u5f3n2r5m.apps.googleusercontent.com",
+              "client_id": "916012287346-26k4582m0fpc4kis7fm2ohtep6kr3eee.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
