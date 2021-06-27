@@ -18,7 +18,7 @@ function CheckOutCard({
   adjustQty,
   item,
 }) {
-  const totalPrice = Price * qty;
+  const totalPrice = item.SalePrice ? item.SalePrice * qty : Price * qty;
   const [counter, setCounter] = useState(item.qty);
   const handleIncrement = () => {
     setCounter(counter + 1);
@@ -34,7 +34,9 @@ function CheckOutCard({
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{title}</AppText>
-        <AppText style={styles.subTitle}>{subTitle}</AppText>
+        <AppText style={styles.subTitle}>
+          {item.SalePrice ? 'Sale' : subTitle}
+        </AppText>
         <AppText>RS:{totalPrice}</AppText>
         <View style={{flexDirection: 'row', flex: 1}}>
           {counter >= 2 ? (

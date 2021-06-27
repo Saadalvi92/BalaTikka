@@ -6,20 +6,33 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import firebaseData from '../Data/Data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [firedata, setFireData] = useState([]);
-  firebaseData().then(e => setFireData(e));
+  firebaseData().then(e => {
+    setFireData(e);
+    const JsonValue = JSON.stringify(e);
+    AsyncStorage.setItem('firedata', JsonValue);
+  });
   const Login = (Email, Password) => {
     auth()
       .signInWithEmailAndPassword(Email, Password)
-      .then(data => {
+      .then(async data => {
         console.log('User account created & signed in!');
-        firedata
-          ? props.navigation.navigate('Itemlist', [data.user, firedata])
-          : console.log('data is missing');
+        if (firedata) {
+          try {
+            const JsonValue = JSON.stringify(data.user);
+            console.log(JsonValue);
+            await AsyncStorage.setItem('UserData', JsonValue);
+            console.log('done');
+            props.navigation.navigate('Itemlist', [data.user, firedata]);
+          } catch (error) {
+            console.log(error);
+          }
+        } else console.log('data is missing');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {

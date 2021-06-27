@@ -8,16 +8,36 @@ import {SliderBox} from 'react-native-image-slider-box';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Load_Products} from '../Store/Shopping/Shopping-actions';
 import {connect} from 'react-redux';
-
+import {ScrollView} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import firestore from '@react-native-firebase/firestore';
 const Itemlist = ({route, addproducts, navigation}) => {
   const Data = route.params;
   const firedata = Data[1];
   const UserData = Data[0];
+  const [PhoneNumber, setPhoneNumber] = useState();
+  const [name, setName] = useState();
   useEffect(() => {
     addproducts(firedata);
+    firestore()
+      .collection('Users')
+      .where('email', '==', UserData.email)
+      .get()
+      .then(e => {
+        setPhoneNumber(e.docs[0].data().phoneNumber);
+        setName(e.docs[0].data().displayName);
+      });
   }, []);
   const SelectArray = ['Banni,Rawalpindi', 'Banni,Lahore', 'Banni,Rawalpindi'];
   const [branch, SetBranch] = useState();
+  const Sale = firedata
+    ? firedata.filter(item => {
+        return item.SalePrice > 0 ? item : null;
+      })
+    : null;
   const Naan = firedata
     ? firedata.filter(item => {
         return item.Category === 'NAAN';
@@ -98,19 +118,21 @@ const Itemlist = ({route, addproducts, navigation}) => {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Cart', UserData);
+              navigation.navigate('Cart', [UserData, PhoneNumber, name]);
             }}>
             <FontAwesome name="shopping-cart" size={30} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('UserDetail', UserData)}>
+            onPress={() =>
+              navigation.navigate('UserDetail', [UserData, PhoneNumber])
+            }>
             <FontAwesome name="user-circle-o" size={30} color="#000" />
           </TouchableOpacity>
         </View>
       </View>
       <View
         style={{
-          flex: 2,
+          flex: 1.5,
         }}>
         <SliderBox
           images={[
@@ -129,46 +151,55 @@ const Itemlist = ({route, addproducts, navigation}) => {
           backgroundColor: '#f1f2f2',
           justifyContent: 'center',
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              setDataFilter(Offers);
+        <ScrollView horizontal={true} style={{flex: 1}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              width: wp(120),
+              marginTop: '2%',
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>Offers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setDataFilter(BarBq);
-            }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>Bar B.Q</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setDataFilter(ChickenPulao);
-            }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              Chicken Pulao
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setDataFilter(Sweets);
-            }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>Sweet</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setDataFilter(Naan);
-            }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>Naan</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(Sale);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Sale</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(Offers);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Offers</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(BarBq);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Bar B.Q</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(ChickenPulao);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                Chicken Pulao
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(Sweets);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Sweet</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setDataFilter(Naan);
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15}}>Naan</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
-
       <View
         style={{
           flex: 4,

@@ -14,7 +14,7 @@ function Card({title, image, price, qty, item, addToCart}) {
     <View
       style={{
         backgroundColor: 'white',
-        height: 180,
+        height: 130,
         flexDirection: 'row',
         borderRadius: 10,
         alignSelf: 'center',
@@ -38,6 +38,7 @@ function Card({title, image, price, qty, item, addToCart}) {
           source={{
             uri: image,
           }}
+          resizeMode="stretch"
         />
       </View>
       <View
@@ -76,8 +77,7 @@ function Card({title, image, price, qty, item, addToCart}) {
 
         <View
           style={{
-            height: 120,
-
+            height: '40%',
             justifyContent: 'flex-end',
           }}>
           <View
@@ -91,7 +91,7 @@ function Card({title, image, price, qty, item, addToCart}) {
                 fontSize: 15,
                 fontWeight: '700',
               }}>
-              RS:{price}
+              {item.SalePrice ? 'Sale RS:' + item.SalePrice : 'RS:' + price}
             </Text>
 
             <View>

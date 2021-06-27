@@ -15,7 +15,9 @@ function Cart({cart, route}) {
   const [totalItems, setTotalItems] = useState(0);
   const [longitude, setLongitude] = useState();
   const [latitude, setLatitude] = useState();
-  const UserData = route.params;
+  const UserData = route.params[0];
+  const PhoneNumber = route.params[1];
+  const Name = route.params[2];
   useEffect(() => {
     let items = 0;
     let price = 0;
@@ -29,11 +31,13 @@ function Cart({cart, route}) {
       })
       .catch(error => {
         const {code, message} = error;
-        console.warn(code, message);
+        console.log(code, message);
       });
     cart.forEach(item => {
       items += item.qty;
-      price += item.qty * item.price;
+      price += item.SalePrice
+        ? item.qty * item.SalePrice
+        : item.qty * item.price;
     });
     setTotalPrice(price);
     setTotalItems(items);
@@ -43,11 +47,20 @@ function Cart({cart, route}) {
       .collection('Orders')
       .add({
         Customer_Details: {
-          Name: UserData.displayName,
+          Name: UserData.displayName
+            ? UserData.displayName
+            : Name
+            ? Name
+            : 'null',
           email: UserData.email,
-          Phonenumeber: UserData.phoneNumber ? UserData.phoneNumber : 'null',
+          Phonenumber: UserData.phoneNumber
+            ? UserData.phoneNumber
+            : PhoneNumber
+            ? PhoneNumber
+            : 'null',
         },
         OrderDetails: cart,
+        TotalPrice: totalPrice,
         Location_parameters: {Longitude: longitude, Latitude: latitude},
         Order_Time: firestore.FieldValue.serverTimestamp(),
         GeoPoints: new firestore.GeoPoint(latitude, longitude),

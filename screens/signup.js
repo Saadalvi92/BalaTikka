@@ -5,7 +5,6 @@ import {
   View,
   Image,
   ScrollView,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import colors from '../Components/colors';
@@ -16,6 +15,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 const Signup = props => {
   const [Name, setName] = useState();
   const [mobile, setMobile] = useState();
@@ -27,22 +27,23 @@ const Signup = props => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('User account created & signed in!');
-        alert('SignUp Successful');
-        props.navigation.navigate('Itemlist', Userdata);
+        alert('SignUp Successful,Please Login Now');
+        firestore()
+          .collection('Users')
+          .add({displayName: Name, phoneNumber: mobile, email: email});
+        // props.navigation.navigate('Itemlist', Userdata);
+        props.navigation.goBack();
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
           alert('That email address is already in use!');
         }
 
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
           alert('That email address is invalid!');
         }
 
-        console.error(error);
+        alert(error);
       });
   };
   return (

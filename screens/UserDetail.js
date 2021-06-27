@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Linking} from 'react-native';
+import {Text, View, TouchableOpacity, Linking, Image} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,14 +11,26 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StackActions} from '@react-navigation/native';
 const UserDetails = props => {
   const Logout = () => {
     auth()
       .signOut()
       .then(() => {
-        props.navigation.popToTop();
+        props.navigation.replace('login');
+        AsyncStorage.removeItem('UserData');
+      })
+      .catch(err => {
+        console.log(err);
+        // props.navigation.popToTop();
+        props.navigation.replace('login');
+        AsyncStorage.removeItem('UserData');
       });
   };
+  const Data = props.route.params;
+  const PhoneNumber = Data[1];
+  const UserData = Data[0];
   return (
     <View
       style={{
@@ -36,17 +48,28 @@ const UserDetails = props => {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <View>
-            <FontAwesome name="user-circle-o" size={100} color="black" />
-            <TouchableOpacity
+          {UserData.photoURL ? (
+            <View
               style={{
                 marginLeft: 85,
                 marginTop: -30,
+                backgroundColor: '#000',
               }}>
-              <AntDesign name="pluscircleo" size={20} color="#4fb853" />
-            </TouchableOpacity>
-          </View>
+              <Image source={{uri: UserData.photoURL}} />
+            </View>
+          ) : (
+            <View>
+              <FontAwesome name="user-circle-o" size={100} color="black" />
 
+              <TouchableOpacity
+                style={{
+                  marginLeft: 85,
+                  marginTop: -30,
+                }}>
+                <AntDesign name="pluscircleo" size={20} color="#4fb853" />
+              </TouchableOpacity>
+            </View>
+          )}
           <View>
             <View
               style={{
@@ -54,17 +77,16 @@ const UserDetails = props => {
                 alignItems: 'center',
                 marginLeft: 15,
               }}>
-              {console.log(props.route.params)}
               <Text
                 style={{
                   fontSize: 17,
                   fontWeight: '600',
                 }}>
-                {!props.route.params
+                {!UserData
                   ? 'NoName'
-                  : props.route.params.displayName
-                  ? props.route.params.displayName
-                  : props.route.params.email}
+                  : UserData.displayName
+                  ? UserData.params.displayName
+                  : UserData.email}
               </Text>
               <MaterialCommunityIcons name="rename-box" size={30} color="red" />
             </View>
@@ -76,9 +98,7 @@ const UserDetails = props => {
                   marginLeft: 10,
                   fontWeight: 'bold',
                 }}>
-                {props.route.params.phoneNumber
-                  ? props.route.params.phoneNumber
-                  : '+923'}
+                {PhoneNumber ? PhoneNumber : '+923'}
               </Text>
             </View>
           </View>
